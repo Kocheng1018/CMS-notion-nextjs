@@ -3,6 +3,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 })
 
+const isProd = process.env.NODE_ENV === 'production'
+
 module.exports = withBundleAnalyzer({
   staticPageGenerationTimeout: 300,
   images: {
@@ -17,6 +19,8 @@ module.exports = withBundleAnalyzer({
     ],
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
-  }
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    unoptimized: true
+  },
+  assetPrefix: isProd ? 'CMS-notion-nextjs' : ''
 })
